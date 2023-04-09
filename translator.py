@@ -1,5 +1,3 @@
-import time
-import sys
 import pyperclip
 import PySimpleGUI as sg
 from deep_translator import GoogleTranslator
@@ -16,15 +14,15 @@ window = sg.Window('Translator', layout)
 event, values = window.read()
 window.close()
 # end of gui code from geeksforgeeks
+# makes the file location readable by changing \ to \\ because of escape keys
 language = values[0].lower()
 fileLocation = values[1].replace("\\", "\\\\").replace("\"", "")
+# opens the file and reads it
 originalRecipe = open(fileLocation, "r")
 originalRecipeInput = originalRecipe.read()
 originalRecipe.close()
+# translates the recipe
 translated = GoogleTranslator(source='auto', target=language).translate(originalRecipeInput)
-length = len(fileLocation)
-length = length - fileLocation.rindex("\\") - 1
-name = fileLocation[-length:]
 # GUI
 # https://stackoverflow.com/questions/64028319/pysimplegui-make-text-selectable-with-mouse for line right below
 layout = [[sg.InputText(translated, use_readonly_for_disable=True, disabled=True, key='-IN-')],
@@ -34,10 +32,7 @@ while True:
     event, vales = window.read()
     if event == "WIN_CLOSED" or event == "close":
         break
+    # copies to clipboard
     if event == "copy":
         pyperclip.copy(translated)
 window.close()
-
-
-# [sg.Text(translated)]
-# [sg.InputText(translated, size=(40, 40), use_readonly_for_disable=True, disabled=True, key='-IN-')]
