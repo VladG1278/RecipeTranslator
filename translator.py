@@ -28,13 +28,18 @@ translated = GoogleTranslator(source='auto', target=language).translate(original
 length = len(fileLocation)
 length = length - fileLocation.rindex("\\") - 1
 name = fileLocation[-length:]
-layout = [[sg.InputText(translated, use_readonly_for_disable=True, disabled=True, key='-IN-')],
+
+# GUI
+layout = [[sg.InputText(translated, size=(40, 40), use_readonly_for_disable=True, disabled=True, key='-IN-')],
          [sg.Button('close'), sg.Button('copy')]]
 window = sg.Window("Translated Output", layout)
 while True:
     event, vales = window.read()
     if event == "close" or event == "WIN_CLOSED":
         break
+    if event == "copy":
+        break
 window.close()
 
 
+# [sg.Text(translated)]
