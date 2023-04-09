@@ -1,5 +1,6 @@
 import time
 import sys
+import pyperclip
 import PySimpleGUI as sg
 from deep_translator import GoogleTranslator
 
@@ -30,16 +31,17 @@ length = length - fileLocation.rindex("\\") - 1
 name = fileLocation[-length:]
 
 # GUI
-layout = [[sg.InputText(translated, size=(40, 40), use_readonly_for_disable=True, disabled=True, key='-IN-')],
+layout = [[sg.InputText(translated, use_readonly_for_disable=True, disabled=True, key='-IN-')],
          [sg.Button('close'), sg.Button('copy')]]
 window = sg.Window("Translated Output", layout)
 while True:
     event, vales = window.read()
-    if event == "close" or event == "WIN_CLOSED":
+    if event == "WIN_CLOSED" or event == "close":
         break
     if event == "copy":
-        break
+        pyperclip.copy(translated)
 window.close()
 
 
 # [sg.Text(translated)]
+# [sg.InputText(translated, size=(40, 40), use_readonly_for_disable=True, disabled=True, key='-IN-')]
