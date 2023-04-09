@@ -19,7 +19,7 @@ event, values = window.read()
 window.close()
 
 # end of gui code from geeksforgeeks
-language = values[0]
+language = values[0].lower()
 fileLocation = values[1].replace("\\", "\\\\").replace("\"", "")
 originalRecipe = open(fileLocation, "r")
 originalRecipeInput = originalRecipe.read()
@@ -28,11 +28,13 @@ translated = GoogleTranslator(source='auto', target=language).translate(original
 length = len(fileLocation)
 length = length - fileLocation.rindex("\\") - 1
 name = fileLocation[-length:]
-layout = [[sg.Text(translated)],
-         [sg.Button('close')]]
+layout = [[sg.InputText(translated, use_readonly_for_disable=True, disabled=True, key='-IN-')],
+         [sg.Button('close'), sg.Button('copy')]]
 window = sg.Window("Translated Output", layout)
 while True:
     event, vales = window.read()
-    if event == "close":
+    if event == "close" or event == "WIN_CLOSED":
         break
 window.close()
+
+
