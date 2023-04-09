@@ -18,7 +18,7 @@ window = sg.Window('Translator', layout)
 event, values = window.read()
 window.close()
 
-# end of gui code from geeksforgeek
+# end of gui code from geeksforgeeks
 language = values[0]
 fileLocation = values[1].replace("\\", "\\\\").replace("\"", "")
 originalRecipe = open(fileLocation, "r")
