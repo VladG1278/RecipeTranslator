@@ -1,27 +1,38 @@
-import requests
-from selenium import webdriver
-from selenium.webdriver.common import keys
-from selenium.webdriver.support.select import Select
 import time
-from bs4 import BeautifulSoup
 import sys
-driver = webdriver.Chrome()
-link = "https://translate.google.com/"
-driver.get(link)
-time.sleep(2)
-# detectLanguageButton = driver.find_element("class", "VfPpkd-YVzG2b")
-# detectLanguageButton.click()
-newLanguage = driver.find_element("class", "VfPpkd-Bz112c-LgbsSe VfPpkd-Bz112c-LgbsSe-OWXEXe-e5LLRc-SxQuSe yHy1rc eT1oJ mN1ivc qiN4Vb KY3GZb szLmtb")
-newLanguage.click()
-editText = driver.find_element("class", "yFQBKb")
-editText.send_keys("Japanese" + keys.Enter)
-originalRecipe = open("C:\\Users\\monke\\PycharmProjects\\WebScraper\\Apple-Berry Pie.txt", "r")
+import PySimpleGUI as sg
+from deep_translator import GoogleTranslator
+
+# https://www.geeksforgeeks.org/user-input-in-pysimplegui/#
+sg.theme('LightBlue1')
+
+
+layout = [
+    [sg.Text('Please enter the desired language and file to convert.')],
+    [sg.Text('Language to Convert To:', size=(20, 1)), sg.InputText()],
+    [sg.Text('File Location:', size=(20, 1)), sg.InputText()],
+    [sg.Submit(), sg.Cancel()]
+]
+
+window = sg.Window('Translator', layout)
+event, values = window.read()
+window.close()
+
+# end of gui code from geeksforgeeks
+language = values[0]
+fileLocation = values[1].replace("\\", "\\\\").replace("\"", "")
+originalRecipe = open(fileLocation, "r")
 originalRecipeInput = originalRecipe.read()
 originalRecipe.close()
-textInput = driver.find_element("class", "er8xn")
-textInput.send_keys(originalRecipeInput)
-textOutput = driver.find_element()
-soup = BeautifulSoup(link.content, "html.parser")
-output = soup.find(Class="HwtZe")
-print(output)
-
+translated = GoogleTranslator(source='auto', target=language).translate(originalRecipeInput)
+length = len(fileLocation)
+length = length - fileLocation.rindex("\\") - 1
+name = fileLocation[-length:]
+layout = [[sg.Text(translated)],
+         [sg.Button('close')]]
+window = sg.Window("Translated Output", layout)
+while True:
+    event, vales = window.read()
+    if event == "close":
+        break
+window.close()
