@@ -1,7 +1,7 @@
 # RecipeTranslator
 Translates Recipes in a text file
 
-This is a simple recipe translator using google translate implemented by the deep_translator package.
+This is a simple recipe translator using google translate implemented by the deep-translator package.
 
 Running:
 In terminal navigate to the containing folder
