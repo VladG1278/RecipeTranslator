@@ -1,5 +1,5 @@
 # RecipeTranslator
-TranslatesRecipes
+Translates Recipes
 
 This is a simple recipe translator using google translate implemented by the deep_translator package.
 
